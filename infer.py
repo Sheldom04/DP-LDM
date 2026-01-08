@@ -17,13 +17,11 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--phase', type=str, choices=['val'], help='val(generation)', default='val')
     parser.add_argument('-gpu', '--gpu_ids', type=str, default=None)
     parser.add_argument('-vae', '--vae_ckpt_path', type=str,
-                        default="my_ldm_concat_cond/my_pt/vae/fine_vae_epoch_30_LSUI.pth")
-    parser.add_argument('-vgg', '--vgg_ckpt_path', type=str,
-                        default="my_ldm_concat_cond/taming/modules/autoencoder/lpips/vgg.pth")
+                        default=r"fine_pt/vae/vae_UIEBD.pth")
     parser.add_argument('-debug', '-d', action='store_true')
     parser.add_argument('-enable_wandb', action='store_true')
     parser.add_argument('-log_infer', action='store_true')
-    
+
     # parse configs
     args = parser.parse_args()
     opt = Logger.parse(args)
@@ -57,7 +55,7 @@ if __name__ == "__main__":
     # model
     diffusion = Model.create_model(opt)
     diffusion.netG.vae_lode_dict(args.vae_ckpt_path)
-    diffusion.netG.denoise_fn.encoder_water.load_states(args.vgg_ckpt_path)
+    # diffusion.netG.denoise_fn.encoder_water.load_states(args.vgg_ckpt_path)
     logger.info('Initial Model Finished')
     diffusion.set_new_noise_schedule(
         opt['model']['beta_schedule']['val'], schedule_phase='val')
