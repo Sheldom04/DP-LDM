@@ -13,7 +13,7 @@
     python infer.py
 ```
 - The enhanced results are displayed in "experiments_train".
-#### train
+#### Train
 - First, train the VAE:
 ```bash
     python my_ldm_concat_cond/train_vae.py
